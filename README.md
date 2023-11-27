@@ -14,6 +14,11 @@ This community application seamlessly presents upcoming events while facilitatin
 - MongoDB
 
 ## Getting Started
+git clone <git@github.com:OneTouchDE/one-touch-app.git>
+cd project
+npm install
+npm run dev
+Access at http://localhost:5173/
 
 ## Contributers
 
