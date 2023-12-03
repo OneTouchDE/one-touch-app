@@ -6,14 +6,16 @@ import "./css/App.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Layout from "./components/layout/Layout";
 import Login from "./components/loginpage/Login";
+import Home from "./components/layout/Home";
 
 function App() {
   return (
     <>
       <Router>
         <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
           <Route element={<Layout />}>
-            <Route path="/login" element={<Login />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/youths" element={<Youths />} />
             <Route path="/attendance" element={<Attendance />} />
