@@ -4,11 +4,11 @@ const Login = () => {
     <div>
       <img src={OneTouchIcon} alt="Icon" />
       <h3>ONE TOUCH</h3>
-      <p>Feel more connected</p>
+      <p>Feel More Connected</p>
 
       <form>
         <h3>Login</h3>
-        <label htmlFor="username">Email</label>
+        <label htmlFor="username">Email </label>
         <input
           type="text"
           name="username"
@@ -16,6 +16,7 @@ const Login = () => {
           placeholder="abc@mail.com"
           required
         />
+
         <label htmlFor="password">Password </label>
         <input
           type="text"
@@ -24,6 +25,7 @@ const Login = () => {
           placeholder="Password"
           required
         />
+
         <button type="submit">LogIn</button>
       </form>
     </div>

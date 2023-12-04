@@ -5,7 +5,7 @@ import Report from "./components/reports/Report";
 import "./css/App.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Layout from "./components/layout/Layout";
-import Login from "./components/loginpage/Login";
+import Login from "./components/login/Login";
 import Home from "./components/layout/Home";
 
 function App() {
