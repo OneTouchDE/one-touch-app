@@ -19,6 +19,8 @@ const Youth = ({ youth }: SingleYouthProp) => {
       >
         Back
       </button>
+      <button type="button">X</button>
+      <button type="button">Edit</button>
     </div>
   );
 };
