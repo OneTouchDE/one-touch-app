@@ -4,14 +4,16 @@ import { useNavigate } from "react-router-dom";
 // import PhoneInput from "react-phone-number-input/input";
 
 export function YouthInfoForm() {
-  const [phoneNumber, setPhoneNumber] = useState<number>(0);
+  const [phoneNumber, setPhoneNumber] = useState<number | string>("");
   const [phoneSameAsWhatsApp, setphoneSameAsWhatsApp] =
     useState<boolean>(false);
-  const [whatsAppNumber, setWhatsappNumber] = useState<number>(0);
+  const [whatsAppNumber, setWhatsappNumber] = useState<number | string>("");
   const navigate = useNavigate();
 
   function handleWhatsAppCheckboxChange() {
     setphoneSameAsWhatsApp(!phoneSameAsWhatsApp);
+
+    console.log(phoneSameAsWhatsApp);
 
     if (!phoneSameAsWhatsApp) {
       setWhatsappNumber(phoneNumber);
@@ -62,7 +64,18 @@ export function YouthInfoForm() {
           />
         </label>
 
-        {phoneSameAsWhatsApp && (
+        {phoneSameAsWhatsApp ? (
+          <>
+            <label htmlFor="whatsAppNumber">WhatsApp Number</label>
+            <input
+              type="number"
+              value={whatsAppNumber}
+              onChange={(event) => setWhatsappNumber(event.target.value)}
+              name="whatsAppNumber"
+              id="whatsAppNumber"
+            />
+          </>
+        ) : (
           <>
             <label htmlFor="whatsAppNumber">WhatsApp Number</label>
             <input
