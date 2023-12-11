@@ -39,21 +39,23 @@ const Youths = ({ youths, selectedYouthId }: YouthProps) => {
         />
         {searchQuery && <button onClick={handleClear}>X</button>}
       </div>
-      <ul>
-        <h3>List of Youths</h3>
-        {searchedYouths.length > 0 ? (
-          searchedYouths?.map((youth: youthType) => (
-            <button
-              key={youth.number}
-              onClick={() => handleNameClick(youth.number)}
-            >
-              {youth.name}
-            </button>
-          ))
-        ) : (
-          <p>{searchQuery} Youth Not Found</p>
-        )}
-      </ul>
+      <p>Total: {youths.length}</p>
+      <h3>Youths</h3>
+
+      {searchedYouths.length > 0 ? (
+        searchedYouths?.map((youth: youthType) => (
+          <button
+            key={youth.number}
+            onClick={() => handleNameClick(youth.number)}
+          >
+            {youth.name}
+          </button>
+        ))
+      ) : (
+        <p>{searchQuery} Youth Not Found</p>
+      )}
+
+      <button onClick={() => navigate(`/youths/create`)}>Add Youth</button>
     </div>
   );
 };
