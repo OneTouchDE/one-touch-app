@@ -41,6 +41,10 @@ function App() {
               path="/youths/:selectedUserId"
               element={<Youth youth={selectedYouth} />}
             />
+            <Route
+              path="/youths/:selectedUserId/update"
+              element={<YouthInfoForm />}
+            />
             <Route path="/youths/create" element={<YouthInfoForm />} />
             <Route path="/attendance" element={<Attendance />} />
             <Route path="/report" element={<Report />} />

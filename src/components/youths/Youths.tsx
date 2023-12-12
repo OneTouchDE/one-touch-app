@@ -8,7 +8,7 @@ interface YouthProps {
 }
 
 const Youths = ({ youths, selectedYouthId }: YouthProps) => {
-  console.log("youths are", youths);
+  // console.log("youths are", youths);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const navigate = useNavigate();
 

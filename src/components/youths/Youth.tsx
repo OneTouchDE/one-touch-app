@@ -9,6 +9,7 @@ interface SingleYouthProp {
 
 const Youth = ({ youth }: SingleYouthProp) => {
   const {
+    youthId,
     firstName,
     lastName,
     youthImage,
@@ -32,7 +33,14 @@ const Youth = ({ youth }: SingleYouthProp) => {
         >
           X
         </button>
-        <button type="button">Edit</button>
+        <button
+          type="button"
+          onClick={() =>
+            navigate(`/youths/${youthId}/update`, { replace: true })
+          }
+        >
+          Edit
+        </button>
         <p>Name: {`${firstName} ${lastName}`}</p>
         <img
           src={youthImage}
