@@ -8,6 +8,7 @@ interface YouthProps {
 }
 
 const Youths = ({ youths, selectedYouthId }: YouthProps) => {
+  console.log("youths are", youths);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const navigate = useNavigate();
 
@@ -24,9 +25,11 @@ const Youths = ({ youths, selectedYouthId }: YouthProps) => {
   function handleClear() {
     setSearchQuery("");
   }
-  const searchedYouths: youthType[] = youths?.filter((youth: youthType) =>
-    youth.name.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const searchedYouths: youthType[] = youths?.filter((youth: youthType) => {
+    const fullNameString =
+      youth.firstName.toLowerCase() + youth.lastName.toLowerCase();
+    return fullNameString.includes(searchQuery.toLowerCase());
+  });
 
   return (
     <div>
@@ -45,10 +48,10 @@ const Youths = ({ youths, selectedYouthId }: YouthProps) => {
       {searchedYouths.length > 0 ? (
         searchedYouths?.map((youth: youthType) => (
           <button
-            key={youth.number}
-            onClick={() => handleNameClick(youth.number)}
+            key={youth.youthId}
+            onClick={() => handleNameClick(youth.youthId)}
           >
-            {youth.name}
+            {`${youth.firstName} ${youth.lastName}`}
           </button>
         ))
       ) : (

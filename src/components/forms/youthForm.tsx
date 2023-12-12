@@ -1,35 +1,56 @@
-// import { E164Number } from "libphonenumber-js/core";
+import { E164Number } from "libphonenumber-js/core";
 import { FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
-// import PhoneInput from "react-phone-number-input/input";
+import PhoneInput from "react-phone-number-input";
+
+import userImage from "../assets/profilePicture.png";
 
 export function YouthInfoForm() {
-  const [phoneNumber, setPhoneNumber] = useState<number | string>("");
+  const [phoneNumber, setPhoneNumber] = useState<E164Number | string>("");
   const [phoneSameAsWhatsApp, setphoneSameAsWhatsApp] =
     useState<boolean>(false);
-  const [whatsAppNumber, setWhatsappNumber] = useState<number | string>("");
+  const [whatsAppNumber, setWhatsappNumber] = useState<E164Number | string>("");
   const navigate = useNavigate();
 
-  function handleWhatsAppCheckboxChange() {
-    setphoneSameAsWhatsApp(!phoneSameAsWhatsApp);
-
-    console.log(phoneSameAsWhatsApp);
-
-    if (!phoneSameAsWhatsApp) {
-      setWhatsappNumber(phoneNumber);
-    } else {
-      setWhatsappNumber(whatsAppNumber);
-    }
-  }
-
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    console.log(event);
-
+  //Handle Form Submission
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const formElement = event.currentTarget;
     const formDate = new FormData(formElement);
     const youthData = Object.fromEntries(formDate);
     console.log("New Youth", youthData);
+
+    //Backend Post method
+    // const response = await fetch("/youths", {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify(youthData),
+    // });
+
+    // if (response.ok) {
+    //   await response.json();
+    //   navigate("/youths");
+    // } else {
+    //   console.error(`Error: ${response}`);
+    // }
+
+    setPhoneNumber("");
+    setWhatsappNumber("");
+    setphoneSameAsWhatsApp(false);
+    formElement.reset();
+    formElement.firstName.focus();
+  }
+
+  //Checkbox state
+  function handleWhatsAppCheckboxChange() {
+    setphoneSameAsWhatsApp(!phoneSameAsWhatsApp);
+    if (!phoneSameAsWhatsApp) {
+      setWhatsappNumber(phoneNumber);
+    } else {
+      setWhatsappNumber(whatsAppNumber);
+    }
   }
 
   return (
@@ -46,13 +67,13 @@ export function YouthInfoForm() {
         <input type="date" name="birthdate" id="birthdate" required />
 
         <label htmlFor="phoneNumber">Phone Number</label>
-        <input
+        <PhoneInput
           placeholder="Enter phone number"
-          type="number"
+          international
+          defaultCountry="DE"
           value={phoneNumber}
-          onChange={(event) => setPhoneNumber(event.target.value)}
-          name="phoneNumber"
-          id="phoneNumber"
+          //@ts-ignore
+          onChange={(phoneNumber) => setPhoneNumber(phoneNumber)}
           required
         />
         <label>
@@ -67,10 +88,12 @@ export function YouthInfoForm() {
         {phoneSameAsWhatsApp ? (
           <>
             <label htmlFor="whatsAppNumber">WhatsApp Number</label>
-            <input
-              type="number"
+            <PhoneInput
+              international
+              defaultCountry="DE"
               value={whatsAppNumber}
-              onChange={(event) => setWhatsappNumber(event.target.value)}
+              //@ts-ignore
+              onChange={(whatsAppNumber) => setWhatsappNumber(whatsAppNumber)}
               name="whatsAppNumber"
               id="whatsAppNumber"
             />
@@ -78,10 +101,12 @@ export function YouthInfoForm() {
         ) : (
           <>
             <label htmlFor="whatsAppNumber">WhatsApp Number</label>
-            <input
-              type="number"
+            <PhoneInput
+              international
+              defaultCountry="DE"
               value={whatsAppNumber}
-              onChange={(event) => setWhatsappNumber(event.target.value)}
+              //@ts-ignore
+              onChange={(whatsAppNumber) => setWhatsappNumber(whatsAppNumber)}
               name="whatsAppNumber"
               id="whatsAppNumber"
             />
@@ -121,12 +146,13 @@ export function YouthInfoForm() {
         />
         <label htmlFor="thursdayAndFriday">Thursday and Friday</label>
 
-        <label htmlFor="imgSrc">Image URL</label>
+        <label htmlFor="userImage">Image </label>
         <input
-          type="text"
-          name="imageSrc"
-          id="imageSrc"
-          placeholder="Enter URL starts with https"
+          type="userImage"
+          name="userImage"
+          id="userImage"
+          placeholder="Don't add URL"
+          defaultValue={userImage}
         />
         <div>
           <button type="button" onClick={() => navigate("/youths")}>

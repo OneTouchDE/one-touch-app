@@ -17,7 +17,7 @@ function App() {
   const [selectedYouthId, setSelectedYouthId] = useState<number | null>(null);
 
   const selectedYouth = youthdata?.find(
-    (youth: youthType) => youth.number === selectedYouthId
+    (youth: youthType) => youth.youthId === selectedYouthId
   );
 
   return (
