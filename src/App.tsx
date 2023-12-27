@@ -43,7 +43,7 @@ function App() {
             />
             <Route
               path="/youths/:selectedUserId/update"
-              element={<YouthInfoForm />}
+              element={<YouthInfoForm youth={selectedYouth} />}
             />
             <Route path="/youths/create" element={<YouthInfoForm />} />
             <Route path="/attendance" element={<Attendance />} />

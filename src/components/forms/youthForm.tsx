@@ -2,10 +2,19 @@ import { E164Number } from "libphonenumber-js/core";
 import { FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PhoneInput from "react-phone-number-input";
-
+import format from "date-fns/format";
 import userImage from "../assets/profilePicture.png";
+import { youthType } from "../../types";
 
-export function YouthInfoForm() {
+interface youthFormInterface {
+  youth: youthType;
+}
+
+export function YouthInfoForm({ youth }: youthFormInterface) {
+  console.log(youth);
+  const [selectedSabha, setSelectedSabha] = useState<string | null>(
+    youth?.sabhaType || null
+  );
   const [phoneNumber, setPhoneNumber] = useState<E164Number | string>("");
   const [phoneSameAsWhatsApp, setphoneSameAsWhatsApp] =
     useState<boolean>(false);
@@ -55,23 +64,49 @@ export function YouthInfoForm() {
 
   return (
     <div>
-      <h3>Add Youth</h3>
+      <h3>{youth ? "Update Youth" : "Add Youth"}</h3>
       <form onSubmit={(event) => handleSubmit(event)}>
         <label htmlFor="firstName">First Name:</label>
-        <input type="text" name="firstName" id="firstName" required />
+        <input
+          type="text"
+          name="firstName"
+          id="firstName"
+          defaultValue={youth?.firstName}
+          required
+        />
         <label htmlFor="lastName">Last Name:</label>
-        <input type="text" name="lastName" id="lastName" required />
+        <input
+          type="text"
+          name="lastName"
+          id="lastName"
+          defaultValue={youth?.lastName}
+          required
+        />
         <label htmlFor="email">Email id</label>
-        <input type="email" name="email" id="email" required />
+        <input
+          type="email"
+          name="email"
+          id="email"
+          defaultValue={youth?.email}
+          required
+        />
         <label htmlFor="birthdate">Birthdate</label>
-        <input type="date" name="birthdate" id="birthdate" required />
+        <input
+          type="date"
+          name="birthdate"
+          id="birthdate"
+          value={
+            youth?.birthdate ? format(youth.birthdate, "yyyy-MM-dd") : null
+          }
+          required
+        />
 
         <label htmlFor="phoneNumber">Phone Number</label>
         <PhoneInput
           placeholder="Enter phone number"
           international
           defaultCountry="DE"
-          value={phoneNumber}
+          value={phoneNumber || (youth && youth.phoneNumber)}
           //@ts-ignore
           onChange={(phoneNumber) => setPhoneNumber(phoneNumber)}
           required
@@ -91,7 +126,7 @@ export function YouthInfoForm() {
             <PhoneInput
               international
               defaultCountry="DE"
-              value={whatsAppNumber}
+              value={whatsAppNumber || youth?.whatsAppNumber}
               //@ts-ignore
               onChange={(whatsAppNumber) => setWhatsappNumber(whatsAppNumber)}
               name="whatsAppNumber"
@@ -104,7 +139,7 @@ export function YouthInfoForm() {
             <PhoneInput
               international
               defaultCountry="DE"
-              value={whatsAppNumber}
+              value={youth?.whatsAppNumber}
               //@ts-ignore
               onChange={(whatsAppNumber) => setWhatsappNumber(whatsAppNumber)}
               name="whatsAppNumber"
@@ -114,14 +149,27 @@ export function YouthInfoForm() {
         )}
 
         <label htmlFor="cityInGermany">From Which city in Germany</label>
-        <input type="text" name="cityInGermany" id="cityInGermany" required />
+        <input
+          type="text"
+          name="cityInGermany"
+          id="cityInGermany"
+          defaultValue={youth?.cityInGermany}
+          required
+        />
         <label htmlFor="cityInIndia">From Which city in India</label>
-        <input type="text" name="cityInIndia" id="cityInIndia" required />
+        <input
+          type="text"
+          name="cityInIndia"
+          id="cityInIndia"
+          defaultValue={youth?.cityInIndia}
+          required
+        />
         <label htmlFor="educationInGermany">Work/Education in Germany</label>
         <input
           type="text"
           name="educationInGermany"
           id="educationInGermany"
+          defaultValue={youth?.educationInGermany}
           required
         />
         <label htmlFor="sabhaType">Reference Name: </label>
@@ -129,13 +177,28 @@ export function YouthInfoForm() {
           type="text"
           name="refNameforSabha"
           id="refNameforSabha"
+          defaultValue={youth?.refNameforSabha}
           required
         />
         <p>Which Sabha do you attend</p>
-        <input type="radio" id="thursday" name="sabhaType" value="Thursday" />
+        <input
+          type="radio"
+          id="thursday"
+          name="sabhaType"
+          value="Thursday"
+          onChange={(e) => setSelectedSabha(e.target.value)}
+          checked={youth?.sabhaType === "Thursday"}
+        />
         <label htmlFor="thursday">Thursday</label>
         <br />
-        <input type="radio" id="friday" name="sabhaType" value="Friday" />
+        <input
+          type="radio"
+          id="friday"
+          name="sabhaType"
+          value="Friday"
+          onChange={(e) => setSelectedSabha(e.target.value)}
+          checked={youth?.sabhaType === "Friday"}
+        />
         <label htmlFor="friday">Friday</label>
         <br />
         <input
@@ -143,6 +206,8 @@ export function YouthInfoForm() {
           id="thursdayAndFriday"
           name="sabhaType"
           value="Thursday and Friday"
+          onChange={(e) => setSelectedSabha(e.target.value)}
+          checked={youth?.sabhaType === "Thursday and Friday"}
         />
         <label htmlFor="thursdayAndFriday">Thursday and Friday</label>
 
@@ -158,7 +223,7 @@ export function YouthInfoForm() {
           <button type="button" onClick={() => navigate("/youths")}>
             Close
           </button>
-          <button type="submit">Create</button>
+          <button type="submit">{youth ? "Update" : "Create"}</button>
         </div>
       </form>
     </div>

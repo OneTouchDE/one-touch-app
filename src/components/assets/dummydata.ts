@@ -14,7 +14,7 @@ export const youthdata: youthType[] = [
     whatsAppNumber: "+491234567890",
     educationInGermany: "Computer Science",
     refNameforSabha: "Mr. Smith",
-    sabhaType: "Community Sabha",
+    sabhaType: "Thursday",
     youthImage: youthImageSrc,
     whatsAppNumberCountry: "",
   },
