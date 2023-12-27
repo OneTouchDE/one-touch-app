@@ -33,12 +33,16 @@ function Dashboard() {
           if (youthBirthdayToday === todayInString) {
             return (
               <div
-                key={youth.number}
+                key={youth.youthId}
                 style={{ color: "red" }}
-              >{`Today is Yours ${youth.name}`}</div>
+              >{`Today is Yours ${youth.firstName} ${youth.lastName}`}</div>
             );
           }
-          return <div key={youth.number}>{youth.name}</div>;
+          return (
+            <div
+              key={youth.youthId}
+            >{`${youth.firstName} ${youth.lastName}`}</div>
+          );
         })}
       </div>
       <div>
