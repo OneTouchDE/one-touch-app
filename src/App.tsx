@@ -46,7 +46,10 @@ function App() {
               element={<YouthInfoForm youth={selectedYouth} />}
             />
             <Route path="/youths/create" element={<YouthInfoForm />} />
-            <Route path="/attendance" element={<Attendance />} />
+            <Route
+              path="/attendance"
+              element={<Attendance youths={youthdata} />}
+            />
             <Route path="/report" element={<Report />} />
           </Route>
         </Routes>

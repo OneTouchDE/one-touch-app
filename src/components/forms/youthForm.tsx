@@ -29,21 +29,30 @@ export function YouthInfoForm({ youth }: youthFormInterface) {
     const youthData = Object.fromEntries(formDate);
     console.log("New Youth", youthData);
 
-    //Backend Post method
-    // const response = await fetch("/youths", {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify(youthData),
-    // });
+    let method = "POST";
+    let requestURL = "/youths";
 
-    // if (response.ok) {
-    //   await response.json();
-    //   navigate("/youths");
-    // } else {
-    //   console.error(`Error: ${response}`);
-    // }
+    if (youth) {
+      method = "PUT";
+      requestURL = `/youths/${youth.youthId}`;
+    }
+
+    // Backend Post method
+    const response = await fetch(requestURL, {
+      method: method,
+      headers: {
+        "Content-Type": "application/json",
+      },
+
+      body: JSON.stringify(youthData),
+    });
+
+    if (response.ok) {
+      await response.json();
+      navigate("/youths");
+    } else {
+      console.error(`Error: ${response}`);
+    }
 
     setPhoneNumber("");
     setWhatsappNumber("");
@@ -96,7 +105,9 @@ export function YouthInfoForm({ youth }: youthFormInterface) {
           name="birthdate"
           id="birthdate"
           value={
-            youth?.birthdate ? format(youth.birthdate, "yyyy-MM-dd") : null
+            youth?.birthdate
+              ? format(youth.birthdate, "yyyy-MM-dd")
+              : null || ""
           }
           required
         />
@@ -106,9 +117,8 @@ export function YouthInfoForm({ youth }: youthFormInterface) {
           placeholder="Enter phone number"
           international
           defaultCountry="DE"
-          value={phoneNumber || (youth && youth.phoneNumber)}
-          //@ts-ignore
-          onChange={(phoneNumber) => setPhoneNumber(phoneNumber)}
+          value={phoneNumber || (youth && youth.phoneNumber) || ""}
+          onChange={(phoneNumber) => setPhoneNumber(phoneNumber || "")}
           required
         />
         <label>
@@ -126,9 +136,10 @@ export function YouthInfoForm({ youth }: youthFormInterface) {
             <PhoneInput
               international
               defaultCountry="DE"
-              value={whatsAppNumber || youth?.whatsAppNumber}
-              //@ts-ignore
-              onChange={(whatsAppNumber) => setWhatsappNumber(whatsAppNumber)}
+              value={whatsAppNumber || youth?.whatsAppNumber || ""}
+              onChange={(whatsAppNumber) =>
+                setWhatsappNumber(whatsAppNumber || "")
+              }
               name="whatsAppNumber"
               id="whatsAppNumber"
             />
@@ -139,9 +150,10 @@ export function YouthInfoForm({ youth }: youthFormInterface) {
             <PhoneInput
               international
               defaultCountry="DE"
-              value={youth?.whatsAppNumber}
-              //@ts-ignore
-              onChange={(whatsAppNumber) => setWhatsappNumber(whatsAppNumber)}
+              value={youth?.whatsAppNumber || ""}
+              onChange={(whatsAppNumber) =>
+                setWhatsappNumber(whatsAppNumber || "")
+              }
               name="whatsAppNumber"
               id="whatsAppNumber"
             />
