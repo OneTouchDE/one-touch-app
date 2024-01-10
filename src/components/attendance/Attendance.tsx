@@ -7,22 +7,36 @@ interface YouthsAttendence {
   youths: youthType[];
 }
 
+interface SelectedYouthType {
+  [key: number]: {
+    isSelected: boolean;
+    youthName: string;
+  };
+}
+
 const Attendance = ({ youths }: YouthsAttendence) => {
-  const [selectedYouths, setSelectedYouths] = useState([]);
+  const [selectedYouths, setSelectedYouths] = useState<SelectedYouthType>({});
 
-  console.log(selectedYouths);
-
-  function addSelectedYouth(youth) {
-    setSelectedYouths([
+  function addSelectedYouth(youth: youthType) {
+    setSelectedYouths({
       ...selectedYouths,
-      {
+      [youth.youthId]: {
         isSelected: selectedYouths[youth.youthId]
-          ? !selectedYouths[youth.youthId]
+          ? !selectedYouths[youth.youthId].isSelected
           : true,
-        youth,
+        youthName: `${youth.firstName} ${youth.lastName}`,
       },
-    ]);
+    });
   }
+
+  function sendAttendence() {
+    // const dataToSend = selectedYouths?.map((selectedYouth)=>)
+
+    console.log(selectedYouths);
+    setSelectedYouths({});
+    console.log(selectedYouths);
+  }
+
   return (
     <div>
       <h3>Attendence</h3>
@@ -35,7 +49,9 @@ const Attendance = ({ youths }: YouthsAttendence) => {
           addSelectedYouth={addSelectedYouth}
         />
       ))}
-      <button type="button">Send</button>
+      <button type="button" onClick={() => sendAttendence()}>
+        Send
+      </button>
     </div>
   );
 };
